@@ -9,11 +9,27 @@ public class Joojle {
     HashMap<String, HashSet<File>> keywords;
     HashSet<File> unprocessedDocuments;
     HashSet<File> processedDocuments;
+    HashSet<String> stopWords;
 
     public Joojle() {
+        keywords = new HashMap<>();
         unprocessedDocuments = new HashSet<>();
         processedDocuments = new HashSet<>();
-        keywords = new HashMap<>();
+        stopWords = new HashSet<>();
+        initialStopWords();
+    }
+
+    private void initialStopWords() {
+        // Using text file allow us to edit them outside the application
+        File file = new File("data/stop-words.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNext()) {
+                stopWords.add(scanner.next());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean addDocuments(File folder) {
@@ -47,6 +63,7 @@ public class Joojle {
                 while (scanner.hasNext()) {
                     word = scanner.next();
                     word = removeSymbols(word.toLowerCase());
+                    if(stopWords.contains(word)) continue;
                     HashSet<File> documents = keywords.get(word);
                     if (documents == null) {
                         documents = new HashSet<>();
