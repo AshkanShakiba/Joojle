@@ -16,17 +16,22 @@ public class Joojle {
         keywords = new HashMap<>();
     }
 
-    public void addDocuments(File folder) {
-        for (File fileEntry : folder.listFiles()) {
+    public boolean addDocuments(File folder) {
+        File[] listFiles = folder.listFiles();
+        if (listFiles == null) {
+            return false;
+        }
+        for (File fileEntry : listFiles) {
             if (fileEntry.isDirectory()) {
                 addDocuments(fileEntry);
             } else if (!processedDocuments.contains(fileEntry)) {
                 unprocessedDocuments.add(fileEntry);
             }
         }
+        return true;
     }
 
-    public void complete() {
+    public void process() {
         String word;
         Scanner scanner;
         File document;

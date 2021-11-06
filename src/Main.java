@@ -11,7 +11,7 @@ public class Main {
             System.out.println("Joojle Search Engine Menu");
             System.out.println("1. Search");
             System.out.println("2. Add Documents");
-            System.out.println("3. Completing Database");
+            System.out.println("3. Process Documents");
             System.out.println("4. Documents Status");
             System.out.println("5. Exit");
             switch (scanner.nextInt()) {
@@ -26,11 +26,14 @@ public class Main {
                     System.out.print("Path: ");
                     String path = scanner.nextLine();
                     File folder = new File(path);
-                    joojle.addDocuments(folder);
-                    System.out.println("Documents added successfully");
+                    if (joojle.addDocuments(folder)) {
+                        System.out.println("Documents added successfully");
+                    } else {
+                        System.out.println("Invalid path");
+                    }
                     break;
                 case 3:
-                    joojle.complete();
+                    joojle.process();
                     System.out.println("Database completed successfully");
                     break;
                 case 4:
