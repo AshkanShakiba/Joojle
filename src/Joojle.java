@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Joojle {
     HashSet<File> documents;
@@ -34,7 +31,7 @@ public class Joojle {
             try {
                 scanner = new Scanner(document);
                 while (scanner.hasNext()) {
-                    word = scanner.next();
+                    word = scanner.next().toLowerCase();
                     HashSet<File> documents = keywords.get(word);
                     if (documents == null) {
                         documents = new HashSet<>();
@@ -57,7 +54,7 @@ public class Joojle {
 
     public String search(String keyword) {
         int index = 1;
-        HashSet<File> documents = keywords.get(keyword);
+        HashSet<File> documents = keywords.get(keyword.toLowerCase());
         if (documents == null) {
             return "0 result found\n";
         }
