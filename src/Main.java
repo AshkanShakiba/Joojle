@@ -12,7 +12,8 @@ public class Main {
             System.out.println("1. Search");
             System.out.println("2. Add Documents");
             System.out.println("3. Completing Database");
-            System.out.println("4. Exit");
+            System.out.println("4. Documents Status");
+            System.out.println("5. Exit");
             switch (scanner.nextInt()) {
                 case 1:
                     System.out.print("Keyword: ");
@@ -33,10 +34,10 @@ public class Main {
                     System.out.println("Database completed successfully");
                     break;
                 case 4:
-                    System.exit(0);
+                    System.out.print(joojle.status());
                     break;
                 case 5:
-                    joojle.print();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid input, Try again");

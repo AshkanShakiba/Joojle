@@ -1,13 +1,18 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class Joojle {
-    HashSet<File> documents;
     HashMap<String, HashSet<File>> keywords;
+    HashSet<File> unprocessedDocuments;
+    HashSet<File> processedDocuments;
 
     public Joojle() {
-        documents = new HashSet<>();
+        unprocessedDocuments = new HashSet<>();
+        processedDocuments = new HashSet<>();
         keywords = new HashMap<>();
     }
 
@@ -15,8 +20,8 @@ public class Joojle {
         for (File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
                 addDocuments(fileEntry);
-            } else {
-                documents.add(fileEntry);
+            } else if (!processedDocuments.contains(fileEntry)) {
+                unprocessedDocuments.add(fileEntry);
             }
         }
     }
@@ -25,7 +30,7 @@ public class Joojle {
         String word;
         Scanner scanner;
         File document;
-        Iterator<File> iterator = documents.iterator();
+        Iterator<File> iterator = unprocessedDocuments.iterator();
         while (iterator.hasNext()) {
             document = iterator.next();
             try {
@@ -42,13 +47,8 @@ public class Joojle {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            processedDocuments.add(document);
             iterator.remove();
-        }
-    }
-
-    public void print() {
-        for (File document : documents) {
-            System.out.println(document.getName());
         }
     }
 
@@ -64,5 +64,23 @@ public class Joojle {
             index++;
         }
         return results;
+    }
+
+    public String status() {
+        int index = 1;
+        String status = "Unprocessed Documents:\n";
+        for (File document : unprocessedDocuments) {
+            status += index + ") " + document.getName() + "\n";
+            index++;
+        }
+        status += "\n";
+        index = 1;
+        status += "Processed Documents:\n";
+        for (File document : processedDocuments) {
+            status += index + ") " + document.getName() + "\n";
+            index++;
+        }
+        status += "\n";
+        return status;
     }
 }
