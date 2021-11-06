@@ -54,4 +54,18 @@ public class Joojle {
             System.out.println(document.getName());
         }
     }
+
+    public String search(String keyword) {
+        int index = 1;
+        HashSet<File> documents = keywords.get(keyword);
+        if (documents == null) {
+            return "0 result found\n";
+        }
+        String results = documents.size() + " result found\n";
+        for (File document : documents) {
+            results += index + ") " + document.getName() + "\n";
+            index++;
+        }
+        return results;
+    }
 }
