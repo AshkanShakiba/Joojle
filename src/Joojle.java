@@ -45,7 +45,8 @@ public class Joojle {
             try {
                 scanner = new Scanner(document);
                 while (scanner.hasNext()) {
-                    word = scanner.next().toLowerCase();
+                    word = scanner.next();
+                    word = removeSymbols(word.toLowerCase());
                     HashSet<File> documents = keywords.get(word);
                     if (documents == null) {
                         documents = new HashSet<>();
@@ -63,7 +64,8 @@ public class Joojle {
 
     public String search(String keyword) {
         int index = 1;
-        HashSet<File> documents = keywords.get(keyword.toLowerCase());
+        keyword = removeSymbols(keyword.toLowerCase());
+        HashSet<File> documents = keywords.get(keyword);
         if (documents == null) {
             return "0 result found\n";
         }
@@ -91,5 +93,18 @@ public class Joojle {
         }
         status += "\n";
         return status;
+    }
+
+    // All word's characters have been converted to lower case
+    private String removeSymbols(String word) {
+        char character;
+        String result = "";
+        for (int i = 0; i < word.length(); i++) {
+            character = word.charAt(i);
+            if ('a' <= character && character <= 'z') {
+                result += character;
+            }
+        }
+        return result;
     }
 }
