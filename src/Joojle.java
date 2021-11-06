@@ -17,6 +17,10 @@ public class Joojle {
     }
 
     public boolean addDocuments(File folder) {
+        if (!folder.isDirectory() && !processedDocuments.contains(folder)) {
+            unprocessedDocuments.add(folder);
+            return true;
+        }
         File[] listFiles = folder.listFiles();
         if (listFiles == null) {
             return false;
