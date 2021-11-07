@@ -66,6 +66,20 @@ public class UserInterface {
         }
         int choice = scanner.nextInt();
         if (choice == 0) return;
-        // printDocument(documentsArray[choice - 1]);
+        printDocument(documentsArray[choice - 1]);
+    }
+
+    private static void printDocument(File document) {
+        System.out.println("Name:\n" + document.getName());
+        System.out.println("Path:\n" + document.getPath());
+        System.out.print("Context:\n");
+        try {
+            Scanner scanner = new Scanner(document);
+            while (scanner.hasNextLine()) {
+                System.out.println(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -6,10 +6,10 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Joojle {
-    HashMap<String, HashSet<File>> keywords;
-    HashSet<File> unprocessedDocuments;
-    HashSet<File> processedDocuments;
-    HashSet<String> stopWords;
+    private final HashMap<String, HashSet<File>> keywords;
+    private final HashSet<File> unprocessedDocuments;
+    private final HashSet<File> processedDocuments;
+    private final HashSet<String> stopWords;
 
     public Joojle() {
         keywords = new HashMap<>();
@@ -32,12 +32,12 @@ public class Joojle {
         }
     }
 
-    public boolean addDocuments(File folder) {
-        if (!folder.isDirectory() && !processedDocuments.contains(folder)) {
-            unprocessedDocuments.add(folder);
+    public boolean addDocuments(File file) {
+        if (file.isFile() && !processedDocuments.contains(file)) {
+            unprocessedDocuments.add(file);
             return true;
         }
-        File[] listFiles = folder.listFiles();
+        File[] listFiles = file.listFiles();
         if (listFiles == null) {
             return false;
         }
@@ -79,19 +79,9 @@ public class Joojle {
         }
     }
 
-    public String search(String keyword) {
-        int index = 1;
+    public HashSet<File> search(String keyword) {
         keyword = removeSymbols(keyword.toLowerCase());
-        HashSet<File> documents = keywords.get(keyword);
-        if (documents == null) {
-            return "0 result found\n";
-        }
-        String results = documents.size() + " result found\n";
-        for (File document : documents) {
-            results += index + ") " + document.getName() + "\n";
-            index++;
-        }
-        return results;
+        return keywords.get(keyword);
     }
 
     public String status() {
