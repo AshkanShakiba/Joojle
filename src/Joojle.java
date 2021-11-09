@@ -63,7 +63,7 @@ public class Joojle {
                 while (scanner.hasNext()) {
                     word = scanner.next();
                     word = removeSymbols(word.toLowerCase());
-                    if(stopWords.contains(word)) continue;
+                    if (stopWords.contains(word)) continue;
                     HashSet<File> documents = keywords.get(word);
                     if (documents == null) {
                         documents = new HashSet<>();
@@ -113,5 +113,13 @@ public class Joojle {
             }
         }
         return result;
+    }
+
+    public HashMap<String, HashSet<File>> getKeywords() {
+        return keywords;
+    }
+
+    public HashSet<String> getStopWords() {
+        return stopWords;
     }
 }

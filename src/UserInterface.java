@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -19,7 +21,8 @@ public class UserInterface {
             System.out.println("2. Add Documents");
             System.out.println("3. Process Documents");
             System.out.println("4. Documents Status");
-            System.out.println("5. Exit");
+            System.out.println("5. Dev Menu");
+            System.out.println("6. Exit");
             switch (scanner.nextInt()) {
                 case 1:
                     searchMenu();
@@ -43,6 +46,9 @@ public class UserInterface {
                     System.out.print(joojle.status());
                     break;
                 case 5:
+                    devMenu();
+                    break;
+                case 6:
                     System.exit(0);
                     break;
                 default:
@@ -80,6 +86,60 @@ public class UserInterface {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void devMenu() {
+        while (true) {
+            System.out.println("* Dev Menu *");
+            System.out.println("1. Keywords Map");
+            System.out.println("2. Stop Words");
+            System.out.println("3. Back");
+            switch (scanner.nextInt()) {
+                case 1:
+                    int index = 1;
+                    HashSet<File> documents;
+                    Iterator<File> documentsIterator;
+                    HashMap<String, HashSet<File>> keywords = joojle.getKeywords();
+                    Iterator<String> keywordsIterator = keywords.keySet().iterator();
+                    System.out.println("Keywords:");
+                    while (keywordsIterator.hasNext()) {
+                        String key = keywordsIterator.next();
+                        System.out.print(index + ") " + key + " -> {");
+                        documents = keywords.get(key);
+                        documentsIterator = documents.iterator();
+                        while (true) {
+                            System.out.print(documentsIterator.next().getName());
+                            if (documentsIterator.hasNext()) {
+                                System.out.print(", ");
+                            } else {
+                                break;
+                            }
+                        }
+                        System.out.println("}");
+                        index++;
+                    }
+                    break;
+                case 2:
+                    HashSet<String> stopWords = joojle.getStopWords();
+                    Iterator<String> stopWordsIterator = stopWords.iterator();
+                    System.out.println("Stop Words:");
+                    while (true) {
+                        System.out.print(stopWordsIterator.next());
+                        if (stopWordsIterator.hasNext()) {
+                            System.out.print(", ");
+                        } else {
+                            System.out.println();
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    mainMenu();
+                    return;
+                default:
+                    System.out.println("Invalid input, Try again");
+            }
         }
     }
 }
