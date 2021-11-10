@@ -21,7 +21,8 @@ public class UserInterface {
             System.out.println("2. Add Documents");
             System.out.println("3. Process Documents");
             System.out.println("4. Documents Status");
-            System.out.println("5. Exit");
+            System.out.println("5. Help");
+            System.out.println("6. Exit");
             switch (scanner.next()) {
                 case "1":
                     searchMenu();
@@ -45,6 +46,9 @@ public class UserInterface {
                     System.out.print(joojle.status());
                     break;
                 case "5":
+                    help();
+                    break;
+                case "6":
                     System.exit(0);
                     break;
                 case "~":
@@ -140,5 +144,44 @@ public class UserInterface {
                     System.out.println("Invalid input, Try again");
             }
         }
+    }
+
+    private static void help(){
+        String help=
+                "\n" +
+                "Joojle\n" +
+                "\n" +
+                "Search Engine, Based on Inverted Index Algorithms\n" +
+                "\n" +
+                "How to use\n" +
+                "\n" +
+                "Select `Add Documents` option and enter documents path\n" +
+                "\n" +
+                "Then use `Process Documents` option to classification documents by inverted index algorithms\n" +
+                "\n" +
+                "You can check documents status in all stages by `Documents Status` option\n" +
+                "\n" +
+                "Use `Search` option to search your keywords in all processed documents\n" +
+                "\n" +
+                "Choose one of search results to open\n" +
+                "\n" +
+                "Dev Menu\n" +
+                "\n" +
+                "Enter `~` to open `Hidden Dev Menu`\n" +
+                "\n" +
+                "Keywords map and stop words are accessible there\n" +
+                "\n" +
+                "How to search\n" +
+                "\n" +
+                "You can search multiple words together\n" +
+                "\n" +
+                "The result will be the subscription of documents that contain all of input words\n" +
+                "\n" +
+                "You can also enter `+` and `-` sign before each word to filter results\n" +
+                "\n" +
+                "All documents that contain words with `-`, will be removed from results\n" +
+                "\n" +
+                "All documents that contain words with `+`, will be presented, even if they don't include other input words\n";
+        System.out.println(help);
     }
 }
