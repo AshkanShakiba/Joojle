@@ -21,13 +21,12 @@ public class UserInterface {
             System.out.println("2. Add Documents");
             System.out.println("3. Process Documents");
             System.out.println("4. Documents Status");
-            System.out.println("5. Dev Menu");
-            System.out.println("6. Exit");
-            switch (scanner.nextInt()) {
-                case 1:
+            System.out.println("5. Exit");
+            switch (scanner.next()) {
+                case "1":
                     searchMenu();
                     break;
-                case 2:
+                case "2":
                     scanner.nextLine();
                     System.out.print("Path: ");
                     String path = scanner.nextLine();
@@ -38,18 +37,18 @@ public class UserInterface {
                         System.out.println("Invalid path");
                     }
                     break;
-                case 3:
+                case "3":
                     joojle.process();
                     System.out.println("Database completed successfully");
                     break;
-                case 4:
+                case "4":
                     System.out.print(joojle.status());
                     break;
-                case 5:
-                    devMenu();
-                    break;
-                case 6:
+                case "5":
                     System.exit(0);
+                    break;
+                case "~":
+                    devMenu();
                     break;
                 default:
                     System.out.println("Invalid input, Try again");
@@ -64,10 +63,7 @@ public class UserInterface {
         scanner.nextLine();
         String keywords = scanner.nextLine();
         HashSet<File> documentsSet = joojle.search(keywords);
-        if (documentsSet == null) {
-            System.out.println("0 result found");
-            return;
-        }
+        System.out.println(documentsSet.size() + " result found");
         System.out.println("0) Back");
         File[] documentsArray = documentsSet.toArray(new File[documentsSet.size()]);
         for (int i = 0; i < documentsArray.length; i++) {

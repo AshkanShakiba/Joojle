@@ -14,6 +14,6 @@ Use `Search` option to search your keywords in all processed documents
 
 Choose one of search results to open
 
-Keywords map and stop words set are accessible in `Dev Menu`
+Enter `~` to open `Hidden Dev Menu`
 
-
+Keywords map and stop words are accessible there
