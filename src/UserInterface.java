@@ -58,9 +58,12 @@ public class UserInterface {
     }
 
     private static void searchMenu() {
-        System.out.print("Keyword: ");
-        String keyword = scanner.next();
-        HashSet<File> documentsSet = joojle.search(keyword);
+        System.out.print("Search: ");
+        // String keyword = scanner.next();
+        // HashSet<File> documentsSet = joojle.simpleSearch(keyword);
+        scanner.nextLine();
+        String keywords = scanner.nextLine();
+        HashSet<File> documentsSet = joojle.search(keywords);
         if (documentsSet == null) {
             System.out.println("0 result found");
             return;

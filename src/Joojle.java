@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Joojle {
     private final HashMap<String, HashSet<File>> keywords;
@@ -79,7 +76,8 @@ public class Joojle {
         }
     }
 
-    public HashSet<File> search(String keyword) {
+    // old search method
+    public HashSet<File> getResults(String keyword) {
         keyword = removeSymbols(keyword.toLowerCase());
         return keywords.get(keyword);
     }
@@ -121,5 +119,38 @@ public class Joojle {
 
     public HashSet<String> getStopWords() {
         return stopWords;
+    }
+
+    public HashSet<File> search(String searchInput) {
+        HashSet<File> results = new HashSet<>();
+        String[] keywords = searchInput.split(" ");
+        ArrayList<String> plusWords = new ArrayList<>();
+        ArrayList<String> simpleWords = new ArrayList<>();
+        ArrayList<String> hyphenWords = new ArrayList<>();
+        for (String keyword : keywords) {
+            if (keyword.startsWith("+")) {
+                plusWords.add(keyword);
+            } else if (keyword.startsWith("-")) {
+                hyphenWords.add(keyword);
+            } else {
+                simpleWords.add(keyword);
+            }
+        }
+        HashSet<File> result;
+        result = getResults(simpleWords.get(0));
+        if (result != null) results.addAll(result);
+        for (int i = 1; i < simpleWords.size(); i++) {
+            result = getResults(simpleWords.get(i));
+            if (result != null) results.retainAll(result);
+        }
+        for (String word : hyphenWords) {
+            result = getResults(word);
+            if (result != null) results.removeAll(result);
+        }
+        for (String word : plusWords) {
+            result = getResults(word);
+            if (result != null) results.addAll(result);
+        }
+        return results;
     }
 }
