@@ -9,11 +9,7 @@ public class UserInterface {
     private static final Joojle joojle = new Joojle();
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        mainMenu();
-    }
-
-    private static void mainMenu() {
+    public static void mainMenu() {
         while (true) {
             System.out.println("-------------------------");
             System.out.println("Joojle Search Engine Menu");
